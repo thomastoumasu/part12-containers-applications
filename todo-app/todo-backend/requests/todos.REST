@@ -1,0 +1,21 @@
+
+GET http://localhost:3000/todos
+
+###
+GET http://localhost:3000/todos/statistics
+
+### careful with POST, do not add an empty line before the headers
+POST http://localhost:3000/todos 
+Content-Type: application/json
+
+{
+  "text": "drink more coffee",
+  "done": false
+}
+
+###
+DELETE http://localhost:3000/todos/6909e87c68e1c7ddf8e3f15e
+Content-Type: application/json
+
+###
+PUT http://localhost:3000/todos/6909e3ace1cd148f0a4f87ff

@@ -1,0 +1,27 @@
+services:
+  mongo: # name of the service
+    image: mongo # Runs this image, as foldername/nameoftheservice
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js # sets up db
+      - ./mongo_data:/data/db # persists the data
+  redis:
+    image: redis:8.2-alpine
+    ports:
+      - 6379:6379
+    command: ["redis-server", "--appendonly", "yes"] # Overwrite the CMD, to persist the data
+    volumes: # Declare the volume
+      - ./redis_data:/data
+# # run with
+# cd todo-app/todo-backend
+# docker compose -f docker-compose.dev.yml up
+# # stop with
+# docker compose -f docker-compose.dev.yml down --volumes
+# docker rm $(docker ps -a --format "{{.ID}}")
+# # rebuild with
+# docker compose -f docker-compose.dev.yml up --build

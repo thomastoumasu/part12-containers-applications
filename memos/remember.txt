@@ -1,0 +1,24 @@
+script -r script-answers/exercise12_11.txt
+exit
+script -p script-answers/exercise12_11.txt
+
+https://tkt-lapio.github.io/command-line/
+shell or cd: home folder. pwd: see path from root folder. root is /. A path that starts with / is absolute, otherwise it is relative.
+ls -la
+mkdir
+touch to create text file
+cat, or head -n 10, or tail -n 10, to show contents of file
+> to pipe into a file. > recreates, >> adds. curl url > text.txt
+mv file.txt /targetfolder
+&& to chain commands (second will not be executed if first fails)
+sh to execute from file
+
+Dockerfile specifies the image.
+images includes the code, the dependencies and the instructions how to run the application. Images are immutable.
+Docker build turns an image into a runtime instance of the image aka a container.
+.dockerignore specifies files not to be copied into the image.
+docker-compose.yml to automatize the image build, then run with docker compose up
+-p : hostport:applicationport so 3010:3000 means localhost:3010
+
+docker Container ls, start -i rm, kill 
+docker builder prune to remove cache

@@ -1,0 +1,15 @@
+services:
+  app: # The name of the service, can be anything
+    image: backend # Runs this image, as foldername/nameoftheservice
+    build: . # if the image name was not found, takes this Dockerfile and builds the image, naming it with the image name, and runs it
+    ports: # Declares the ports to publish
+      - 3000:3000
+# # use as
+# cd todo-app/todo-backend
+# docker compose up
+# # or if called not from the same directory
+# docker compose -f todo-app/todo-backend/docker-compose.yml up
+# # stop as
+# docker compose down --volumes
+# and to rebuild the image:
+# docker compose up --build

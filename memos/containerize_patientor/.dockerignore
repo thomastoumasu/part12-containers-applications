@@ -1,0 +1,10 @@
+.dockerignore
+.gitignore
+node_modules
+build
+dist
+Dockerfile
+.DS_Store
+Patientor_fullstack/build
+Patientor_fullstack/dist
+Patientor_fullstack/node_modules
