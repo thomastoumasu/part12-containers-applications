@@ -1,0 +1,28 @@
+# The first FROM is now a stage called build-stage
+FROM node:20 AS build-stage 
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN npm ci
+
+ENV VITE_BACKEND_URL=http://localhost:3000/ 
+
+RUN npm run build
+
+# This is a new stage, everything before this is gone, except for the files that we want to COPY
+FROM nginx:1.25-alpine
+# if need to debug with bash, alpine (aka lightweight) will not include it so install full nginx instead
+# FROM nginx 
+
+# COPY the directory dist from the build-stage to /usr/share/nginx/html
+# The target location here was found from the Docker hub page
+COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
+
+# no need for CMD, nginx starts up on its own
+
+# docker build -t frontend . 
+# docker build --target build-stage -t frontend . # to stop at the build stage
+# docker container run --name frontend --rm -p 5173:80 frontend
+# docker container run -it --name frontend --rm -p 5173:80 frontend bash # need nginx, nginx:alpine does not include bash

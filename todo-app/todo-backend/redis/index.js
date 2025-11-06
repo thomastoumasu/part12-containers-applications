@@ -13,13 +13,9 @@ if (!REDIS_URL) {
   getAsync = redisIsDisabled;
   setAsync = redisIsDisabled;
 } else {
-  console.log("before creating redis client");
   const client = redis.createClient({
     url: REDIS_URL,
-    // url: "redis://redis:6379",
-    // legacyMode: true,
   });
-  console.log("after creating redis client");
 
   getAsync = promisify(client.get).bind(client);
   setAsync = promisify(client.set).bind(client);

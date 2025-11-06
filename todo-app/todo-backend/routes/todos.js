@@ -1,8 +1,6 @@
 const express = require("express");
 const { Todo } = require("../mongo");
-console.log("before importing redis");
 const { getAsync, setAsync } = require("../redis");
-console.log("before importing redis");
 const router = express.Router();
 
 /* GET todos listing. */
