@@ -1,7 +1,7 @@
 # run with docker compose up, stop with docker compose down
 services:
   app: # The name of the service, can be anything
-    image: yaml-patientor # Declares which image to use
+    image: patientor # Declares which image to use
     build: . # Declares where to build if image is not found
     ports: # Declares the ports to publish
       - 3010:3001
