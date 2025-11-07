@@ -7,7 +7,10 @@ COPY . .
 # RUN npm install
 # the host node_modules will be used with volumes
 
-ENV VITE_BACKEND_URL=http://localhost:3000/ 
+# if backend run on host
+# ENV VITE_BACKEND_URL=http://localhost:3000/ 
+# if backend run in  container with reverse proxy
+ENV VITE_BACKEND_URL=http://localhost:8080/api
 
 CMD npm run dev 
 # -- --host not necessary, taken care of in vite.config.js

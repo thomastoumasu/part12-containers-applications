@@ -21,6 +21,7 @@ docker-compose.yml to automatize the image build, then run with docker compose u
 -p : hostport:applicationport so 3010:3000 means 3000 from inside, localhost:3010 from outside
 
 docker Container ls, start -i rm, kill 
-docker builder prune to remove cache
+docker builder prune -f
+docker system prune -f
 docker rm -vf $(docker ps -aq) && docker rmi -f $(docker images -aq) 
-docker network prune
+docker network prune -f

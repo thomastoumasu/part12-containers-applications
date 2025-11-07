@@ -1,7 +1,6 @@
 # docker file to run backend in container
-# will not work yet with mongoose and redis
 # use existing image as basis
-FROM node:20
+FROM node:20-alpine
 
 # create work dir to avoid destroying existing files on the container
 WORKDIR /usr/src/app

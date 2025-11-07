@@ -1,0 +1,50 @@
+# to run the frontend and backend both in development mode behind a proxy server
+## if run on mac M1, first need to install the linux version of @rollup/rollup into node_modules. https://fullstackopen.com/en/part12/basics_of_orchestration#exercise-12-15
+## see docker-compose.dev.yml in front-end folder.
+# docker compose -f docker-compose.dev.yml up
+# docker compose -f docker-compose.dev.yml down --volumes
+services:
+  frontend-dev:
+    image: frontend-dev
+    build:
+      context: . # The context will pick this directory as the "build context"
+      dockerfile: todo-frontend/dev.Dockerfile # This will simply tell which dockerfile to read
+    volumes:
+      - ./todo-frontend/:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+    container_name: frontend-dev # This will name the container hello-front-dev
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./todo-backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js # sets up db
+      - ./todo-backend/mongo_data:/data/db # persists the data
+    container_name: mongodb
+  redis:
+    image: redis:8.2-alpine
+    command: ["redis-server", "--appendonly", "yes"] # Overwrite the CMD, to persist the data
+    volumes:
+      - ./todo-backend/redis_data:/data
+  backend-dev:
+    image: backend-dev
+    build:
+      context: . # The context will pick this directory as the "build context"
+      dockerfile: ./todo-backend/dev.Dockerfile # This will simply tell which dockerfile to read
+    volumes:
+      - ./todo-backend/:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
+    container_name: backend-dev # This will name the container
+  reverse-proxy:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - frontend-dev
+      - backend-dev
