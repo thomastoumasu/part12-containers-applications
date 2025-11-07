@@ -31,11 +31,4 @@ services:
       - REDIS_URL=redis://redis:6379
       - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
     container_name: backend-dev # This will name the container
-# # run with
-# cd todo-app/todo-backend
-# docker compose -f docker-compose.dev.yml up
-# # stop with
-# docker compose -f docker-compose.dev.yml down --volumes
-# # rebuild with
-# docker compose -f docker-compose.dev.yml up --build
-# debug network: docker exec -it backend-dev bash   then wget http://mongo:27017 -O -
+

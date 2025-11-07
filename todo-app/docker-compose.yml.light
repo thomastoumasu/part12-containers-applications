@@ -1,12 +1,8 @@
-# to run the frontend and backend both in production mode behind a proxy server
+# to run the frontend and backend both in production mode. One nginx container serves the frontend directly and works as proxy-server to the backend.
 ## if first time run on mac M1, first need to install the linux version of @rollup/rollup into node_modules. https://fullstackopen.com/en/part12/basics_of_orchestration#exercise-12-15
 ## see docker-compose.dev.yml in front-end folder.
+
 services:
-  frontend:
-    image: frontend
-    build:
-      context: ./todo-frontend # The context will pick this directory as the "build context"
-    container_name: frontend
   mongo:
     image: mongo
     environment:
@@ -31,13 +27,12 @@ services:
       - REDIS_URL=redis://redis:6379
       - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
     container_name: backend # This will name the container
-  reverse-proxy:
-    image: nginx:1.25-alpine
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  frontend:
+    image: frontend
+    build:
+      context: ./todo-frontend # The context will pick this directory as the "build context"
+    container_name: frontend
     ports:
       - 8080:80
-    container_name: reverse-proxy
     depends_on:
-      - frontend
       - backend

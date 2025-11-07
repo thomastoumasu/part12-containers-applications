@@ -1,8 +1,4 @@
 # to run npm run dev in a container, being able to access the code in VS -- using volumes
-# build image named backend-dev from the dockerfile in this folder:
-  # docker build -f dev.Dockerfile -t backend-dev . 
-  # docker container run -it --name backend-dev --rm -p 3000:3000 backend-dev bash
-  # docker container run --name backend-dev --rm -p 3000:3000 -v "$(pwd):/usr/src/app/" backend-dev
 
 # use existing image as basis
 FROM node:20

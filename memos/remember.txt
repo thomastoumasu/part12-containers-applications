@@ -20,7 +20,23 @@ Docker build turns an image into a runtime instance of the image aka a container
 docker-compose.yml to automatize the image build, then run with docker compose up
 -p : hostport:applicationport so 3010:3000 means 3000 from inside, localhost:3010 from outside
 
-docker Container ls, start -i rm, kill 
+# build image named backend-dev from the dockerfile called dev.Dockerfile which is in this folder:
+docker build -f dev.Dockerfile -t backend-dev . 
+
+docker build -t frontend . 
+docker build --target build-stage -t frontend . # to stop at the build stage
+docker container run --name frontend --rm -p 5173:80 frontend
+docker container run -it --name frontend --rm -p 5173:80 frontend bash 
+docker container run --name frontend-dev -it --rm -p 5173:5173 -v "$(pwd):/usr/src/app/" frontend-dev bash
+
+docker compose -f docker-compose.dev.yml up
+docker compose -f docker-compose.dev.yml down --volumes
+# and to rebuild the image:
+docker compose up --build
+
+# debug network: 
+docker exec -it frontend bash   then wget http://mongo:27017 -O - or curl http://mongo:27017
+
 docker builder prune -f
 docker system prune -f
 docker rm -vf $(docker ps -aq) && docker rmi -f $(docker images -aq) 
