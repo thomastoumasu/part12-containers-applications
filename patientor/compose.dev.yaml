@@ -1,0 +1,36 @@
+# to run the frontend and backend both in development mode behind a proxy server
+# docker compose -f compose.dev.yaml up
+# docker compose -f compose.dev.yaml down --volumes
+# Om M1: first need to install the linux version of @rollup/rollup into node_modules. https://fullstackopen.com/en/part12/basics_of_orchestration#exercise-12-15
+# first docker build -t frontend-dev -f dev.Dockerfile .
+# then docker container run --name frontend-dev -it --rm -p 5173:5173 -v "$(pwd):/usr/src/app/" frontend-dev bash
+# then npm install (this will install in the container and on the host as well)
+# after that npm run dev will work.
+#
+services:
+  frontend-dev:
+    image: frontend-dev
+    build:
+      context: .
+      dockerfile: frontend/dev.Dockerfile
+    volumes:
+      - ./frontend/:/usr/src/app
+    container_name: frontend-dev
+  backend-dev:
+    image: backend-dev
+    build:
+      context: .
+      dockerfile: ./backend/dev.Dockerfile
+    volumes:
+      - ./backend/:/usr/src/app
+    container_name: backend-dev
+  reverse-proxy:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - frontend-dev
+      - backend-dev

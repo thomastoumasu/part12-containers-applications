@@ -1,0 +1,59 @@
+
+GET http://localhost:3001/api/patients
+
+###
+GET http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667
+
+
+### careful with POST, do not add an empty line before the headers
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+  "name": "Bob",
+  "dateOfBirth": "1980-02-01",
+  "ssn": "123456",
+  "gender": "female",
+  "occupation": "camera man"
+}
+
+### careful with POST, do not add an empty line before the headers
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "date": "2019-05-01",
+  "specialist": "Thomas",
+  "type": "HealthCheck",
+  "description": "Felt incredibly good after bathing in the Isar",
+  "healthCheckRating": 0
+}
+
+### careful with POST, do not add an empty line before the headers
+POST http://localhost:3001/api/patients/d2773822-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "date": "1900-09-10",
+  "specialist": "Frank Sinatra",
+  "type": "OccupationalHealthcare",
+  "employerName": "DB Regio",
+  "description": "Injections against headache"
+}
+
+### careful with POST, do not add an empty line before the headers
+POST http://localhost:3001/api/patients/d2773822-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "date": "2015-01-02",
+  "type": "Hospital",
+  "specialist": "Gregory",
+  "diagnosisCodes": ["S62.5"],
+  "description":
+    "Punched a tablet",
+  "discharge": {
+    "date": "2015-01-16",
+    "criteria": "Thumb has grown again"
+  }
+}
