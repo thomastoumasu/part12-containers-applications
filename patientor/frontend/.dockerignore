@@ -1,7 +1,11 @@
-.dockerignore
-.gitignore
-node_modules
 dist
+
+node_modules
+.dockerignore
 Dockerfile
 dev.Dockerfile
+.git
+.gitignore
+npm-debug.log
+.npmrc
 .DS_Store

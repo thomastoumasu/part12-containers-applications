@@ -15,7 +15,7 @@ const getPatients = (): NonSensitivePatient[] => {
     gender,
     occupation,
     entries
-    }));
+  }));
 };
 
 const addPatient = (newPatient: NewPatient): Patient => {
